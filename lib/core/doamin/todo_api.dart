@@ -1,6 +1,6 @@
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:todo_app/core/data/end_points.dart';
-import 'package:todo_app/core/data/graphql_strings.dart';
+import 'package:todo_app/core/data/repository/end_points.dart';
+import 'package:todo_app/core/data/repository/graphql_strings.dart';
 import 'package:todo_app/core/data/model/add_todo_model.dart';
 import 'package:todo_app/core/data/model/todo_model.dart';
 
@@ -51,10 +51,32 @@ class TodoApi {
         document: gql(RootQueries.deleteTodo),
         variables: {'id': id}));
 
-        if(queryResult.hasException){
-          return false;
-        }
-        return true;
-        
+    if (queryResult.hasException) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<List<Todo>> getAllcompleteTodo(bool completed) async {
+    QueryResult queryResult = await _qlClient.query(QueryOptions(
+      document: gql(RootQueries.filterTodo),
+      variables: {'completed': completed, 'search': ''},
+    ));
+
+    return (queryResult.data!['todos'] as List)
+        .map((todo) => Todo.fromJson(todo))
+        .toList();
+  }
+
+
+    Future<List<Todo>> getAllIncompleteTodo(bool completed) async {
+    QueryResult queryResult = await _qlClient.query(QueryOptions(
+      document: gql(RootQueries.filterTodo),
+      variables: {'completed': completed, 'search': ''},
+    ));
+
+    return (queryResult.data!['todos'] as List)
+        .map((todo) => Todo.fromJson(todo))
+        .toList();
   }
 }

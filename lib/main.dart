@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io';
-
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:todo_app/core/presentation/pages/home_page.dart';
 import 'core/helper/todo_initilizer_controller.dart' as di;
