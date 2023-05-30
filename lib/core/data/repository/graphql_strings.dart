@@ -12,7 +12,7 @@ class RootQueries{
 
 static String filterTodo="""
   query(\$completed:Boolean, \$search:String){
-    todos(completed:\$completed, search:\$serach){
+    todos(completed:\$completed, search:\$search){
         id
         title
         completed
